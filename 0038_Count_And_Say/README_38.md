@@ -37,7 +37,7 @@ The implementation combines top-down recursion to reach the base case with a two
 
 ## Java Solution
 
-The complete Java implementation is available in [`Problem_38.java`](./Problem_38.java).
+The complete Java implementation is available in [`CountAndSay.java`](./CountAndSay.java).
 
 ## Complexity Analysis
 
