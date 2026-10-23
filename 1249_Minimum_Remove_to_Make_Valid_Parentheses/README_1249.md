@@ -6,37 +6,22 @@
 
 ## Problem Statement
 
-Given a string `s` of `'('`, `')'`, and lowercase English characters, remove the minimum number of parentheses (either `'('` or `')'`, in any positions) so that the resulting parentheses string is valid, and return any valid resulting string.
-
-A parentheses string is valid if:
-- It is the empty string, contains only lowercase characters, or
-- It can be written as `AB` (`A` concatenated with `B`), where `A` and `B` are valid strings, or
-- It can be written as `(A)`, where `A` is a valid string.
+Given a string s of &#39;(&#39; , &#39;)&#39; and lowercase English characters. Your task is to remove the minimum number of parentheses ( &#39;(&#39; or &#39;)&#39; , in any positions ) so that the resulting parentheses string is valid and return any valid string. Formally, a parentheses string is valid if and only if: It is the empty string, contains only lowercase characters, or It can be written as AB ( A concatenated with B ), where A and B are valid strings, or It can be written as (A) , where A is a valid string.
 
 ## Approach
 
-The implementation uses an index-tracking stack (simulated with `ArrayList<Integer>`) and in-place marker replacement with a sentinel character (`*`):
+The implementation uses **Direct Iterative Traversal / Simulation** inside `minRemoveToMakeValid(String s) -> String`:
 
-1. **First Pass (Find Invalid Closing Parentheses)**:
-   - Copy `s` into a mutable `StringBuilder sb`.
-   - Maintain a `List<Integer> list` to store the indices of open parentheses `'('`.
-   - Traverse `s` from left to right:
-     - If `s.charAt(i) == '('`, add its index `i` to `list`.
-     - If `s.charAt(i) == ')'`:
-       - If `list.isEmpty()`, there is no preceding unmatched `'('` to pair with this closing bracket. Mark it as invalid by replacing it with `'*'` in `sb`: `sb.setCharAt(i, '*')`.
-       - If `list` is not empty, pop the most recent open bracket index: `list.remove(list.size() - 1)`.
-2. **Second Pass (Mark Unmatched Open Parentheses)**:
-   - Any indices remaining in `list` correspond to `'('` characters that were never closed.
-   - Iterate through `list` and mark each corresponding position in `sb` with `'*'`.
-3. **Third Pass (Reconstruct Clean String)**:
-   - Iterate through `sb` and append every character not equal to `'*'` into a new `StringBuilder ans`.
-4. **Return**: Return `ans.toString()`.
+1. **Initialization**: Set up pointers, counters, and auxiliary data structures needed by `minRemoveToMakeValid(String s) -> String`.
+2. **Core Traversal**: Apply **Direct Iterative Traversal / Simulation** — inspect each element or state transition and update the tracked result.
+3. **Invariant Maintenance**: Advance pointers / window boundaries while preserving all loop invariants.
+4. **Return Result**: Finalize and return the accumulated result or modified structure.
 
 ## Key Concepts
 
-- **Stack Index Tracking**: Using a list as a Last-In-First-Out (LIFO) stack to record the positions of open brackets so they can be matched or identified as excess.
-- **Sentinel Marking**: Marking invalid characters in-place with a sentinel character (`*`) decouples the validation phase from the final string reconstruction phase.
-- **Two-Phase Balancing**: Identifying invalid `')'` during forward traversal and unmatched `'('` after traversal completes.
+- **Data Structure**: Dynamic Array (`ArrayList`/`List`)
+- **Data Structure**: String Builder (`StringBuilder`)
+- **Algorithm / Technique**: Direct Iterative Traversal / Simulation
 
 ## Java Solution
 
@@ -44,20 +29,13 @@ The complete Java implementation is available in [`MinimumRemoveToMakeValidParen
 
 ## Complexity Analysis
 
-Let $n$ be the length of the string `s`:
-
 - **Time Complexity**: $\mathcal{O}(n)$
-  - First pass traverses $n$ characters, performing $\mathcal{O}(1)$ list and string builder operations: $\mathcal{O}(n)$.
-  - Second pass marks at most $n$ leftover opening indices: $\mathcal{O}(n)$.
-  - Third pass iterates over $n$ characters to filter out markers: $\mathcal{O}(n)$.
-  - Total time complexity is linear: $\mathcal{O}(n)$.
+  - A single linear scan processes each element in constant amortized time.
 
 - **Auxiliary Space Complexity**: $\mathcal{O}(n)$
-  - The index stack `list` holds at most $n$ integers in the worst case (e.g., all `'('`).
-  - `sb` and `ans` allocate string buffers of length $\le n$.
+  - Auxiliary collections proportional to input size are allocated.
 
 ## Key Takeaways
 
-- Unmatched closing parentheses can be identified immediately when encountered without an available open bracket in the stack.
-- Unmatched opening parentheses cannot be determined until the end of the string, which makes keeping their indices in a stack essential for post-scan removal.
-- Replacing invalid characters with a sentinel marker in a mutable buffer avoids multiple costly string splicing operations.
+- Choosing **direct iterative traversal / simulation** leads to an efficient solution for this class of problem.
+- Keeping auxiliary allocations minimal ensures the solution remains space-optimal.

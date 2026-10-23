@@ -6,7 +6,6 @@ class ListNode {
       ListNode(int val, ListNode next) { this.val = val; this.next = next; }
   }
 
-
 class Solution_2095 
 {
     public ListNode deleteMiddle(ListNode head) 

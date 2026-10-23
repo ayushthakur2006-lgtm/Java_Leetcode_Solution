@@ -6,7 +6,6 @@ class ListNode {
       ListNode(int val, ListNode next) { this.val = val; this.next = next; }
   }
 
-
 class Solution_445 
 {
     private ListNode reverse(ListNode l)

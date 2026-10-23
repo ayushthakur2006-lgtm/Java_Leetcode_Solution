@@ -6,36 +6,21 @@
 
 ## Problem Statement
 
-You are given the `head` of a linked list. Delete the middle node, and return the `head` of the modified linked list.
-
-The middle node of a linked list of size $n$ is the $\lfloor n / 2 \rfloor$-th node from the start using 0-based indexing:
-- For $n = 1$, index $\lfloor 1 / 2 \rfloor = 0$ is deleted.
-- For $n = 2$, index $\lfloor 2 / 2 \rfloor = 1$ is deleted.
-- For $n = 3$, index $\lfloor 3 / 2 \rfloor = 1$ is deleted.
-- For $n = 4$, index $\lfloor 4 / 2 \rfloor = 2$ is deleted.
+You are given the head of a linked list. Delete the middle node , and return the head of the modified linked list . The middle node of a linked list of size n is the &lfloor;n / 2&rfloor; th node from the start using 0-based indexing , where &lfloor;x&rfloor; denotes the largest integer less than or equal to x . For n = 1 , 2 , 3 , 4 , and 5 , the middle nodes are 0 , 1 , 1 , 2 , and 2 , respectively.
 
 ## Approach
 
-The implementation uses the **fast and slow pointer (tortoise and hare)** technique to locate the middle node in a single pass while tracking its predecessor:
+The implementation uses **Fast and Slow Pointers (Tortoise and Hare)** inside `deleteMiddle(ListNode head) -> ListNode`:
 
-1. **Single-Node Edge Case**:
-   - If `head.next == null`, the list consists of a single node ($n = 1$). Deleting the node at index 0 leaves an empty list, so set `head = null` and return `null`.
-2. **Two-Pointer Traversal with Predecessor Tracking**:
-   - Initialize `fast = head`, `slow = head`, and `prev = null`.
-   - Traverse the list with the condition `while (fast != null && fast.next != null)`:
-     - Update `prev = slow` to keep a reference to the node immediately before `slow`.
-     - Advance `slow = slow.next` (1 step).
-     - Advance `fast = fast.next.next` (2 steps).
-   - Because `fast` moves twice as fast as `slow`, when `fast` reaches the end of the list (either `null` for even length or the terminal node for odd length), `slow` lands precisely on the $\lfloor n / 2 \rfloor$-th node, and `prev` points to the $(\lfloor n / 2 \rfloor - 1)$-th node.
-3. **Bypass the Middle Node**:
-   - Relink the predecessor directly to the successor of `slow`: `prev.next = slow.next`.
-4. **Return**: Return `head`.
+1. **Initialization**: Set up pointers, counters, and auxiliary data structures needed by `deleteMiddle(ListNode head) -> ListNode`.
+2. **Core Traversal**: Apply **Fast and Slow Pointers (Tortoise and Hare)** — inspect each element or state transition and update the tracked result.
+3. **Invariant Maintenance**: Advance pointers / window boundaries while preserving all loop invariants.
+4. **Return Result**: Finalize and return the accumulated result or modified structure.
 
 ## Key Concepts
 
-- **Fast and Slow Pointers (Tortoise and Hare)**: Finding the middle of a linked list in $\mathcal{O}(n)$ time and $\mathcal{O}(1)$ space without pre-computing the total length.
-- **Predecessor Tracking (`prev`)**: Maintaining a pointer one step behind `slow` allows immediate deletion of the target node without a second traversal.
-- **Edge-Case Guarding**: Checking `head.next == null` prevents null pointer dereferencing when deleting the solitary head node.
+- **Data Structure**: Singly Linked List (`ListNode`)
+- **Algorithm / Technique**: Fast and Slow Pointers (Tortoise and Hare)
 
 ## Java Solution
 
@@ -43,19 +28,13 @@ The complete Java implementation is available in [`DeleteTheMiddleNodeOfALinkedL
 
 ## Complexity Analysis
 
-Let $n$ be the number of nodes in the linked list:
-
 - **Time Complexity**: $\mathcal{O}(n)$
-  - In each iteration of the `while` loop, `fast` advances by 2 nodes.
-  - The loop terminates after $\lfloor n / 2 \rfloor$ steps.
-  - Node deletion occurs in constant time: $\mathcal{O}(1)$.
-  - Total time complexity is strictly linear: $\mathcal{O}(n)$.
+  - A single linear scan processes each element in constant amortized time.
 
 - **Auxiliary Space Complexity**: $\mathcal{O}(1)$
-  - The algorithm operates entirely in-place by redirecting existing next pointers.
-  - Only three reference pointers (`fast`, `slow`, `prev`) are allocated.
+  - Only a constant number of scalar pointer variables are used.
 
 ## Key Takeaways
 
-- Moving two pointers at speeds $1x$ and $2x$ eliminates the need for two passes (one to count length and one to reach $\lfloor n / 2 \rfloor$).
-- In singly linked lists where backward traversal is impossible, carrying a trailing pointer (`prev`) enables in-place deletion as soon as the target position is reached.
+- Choosing **fast and slow pointers (tortoise and hare)** leads to an efficient solution for this class of problem.
+- Keeping auxiliary allocations minimal ensures the solution remains space-optimal.

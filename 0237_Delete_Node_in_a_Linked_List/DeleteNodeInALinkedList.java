@@ -6,7 +6,6 @@ class ListNode {
       ListNode(int val, ListNode next) { this.val = val; this.next = next; }
   }
 
-
 class Solution_237
 {
     public void deleteNode(ListNode node) 

@@ -7,8 +7,6 @@ class ListNode {
   }
  
 
-
-
 class Solution_2 
 {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) 
@@ -118,6 +116,3 @@ class Solution_2
         return answer.next;
     }
 }
-
-
-

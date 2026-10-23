@@ -6,35 +6,22 @@
 
 ## Problem Statement
 
-The string is written in a zigzag pattern on a given number of rows (`numRows`), moving vertically down and diagonally up in an alternating fashion, and then read line by line. Given a string `s` and an integer `numRows`, return the string formed by reading the characters row by row.
+The string "PAYPALISHIRING" is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility) P A H N A P L S I I G Y I R And then read line by line: "PAHNAPLSIIGYIR" Write the code that will take a string and make this conversion given a number of rows: string convert(string s, int numRows);
 
 ## Approach
 
-The implementation simulates the zigzag motion row-by-row by distributing characters into buckets corresponding to each row and toggling directions at the top and bottom boundaries:
+The implementation uses **Direct Iterative Traversal / Simulation** inside `convert(String s, int numRows) -> String`:
 
-1. **Base Case Optimization**:
-   - If `numRows == 1` or `numRows >= s.length()`, the zigzag pattern either has only one row or cannot complete a single column. Return the original string `s` directly.
-2. **Row Bucket Initialization**:
-   - Allocate an array of character lists `List<Character>[] twoDStructure` of size `numRows`.
-   - Instantiate an empty `ArrayList<Character>` for each row to collect its respective characters.
-3. **Simulating Zigzag Traversal**:
-   - Track the current row with `index = 0` and the vertical movement with `direction = 1` (`+1` for downward movement, `-1` for upward diagonal movement).
-   - Iterate through each character `temp` of `s`:
-     - Add `temp` to `twoDStructure[index]`.
-     - **Boundary Checking & Direction Reversal**:
-       - If `index == 0`, set `direction = 1` (move downwards).
-       - Else if `index == numRows - 1`, set `direction = -1` (move upwards).
-     - Update the row cursor: `index += direction`.
-4. **Row-by-Row Result Construction**:
-   - Traverse through each row in `twoDStructure` and append its characters sequentially into a `StringBuilder sb`.
-5. **Return**: Convert `sb` to a string and return it.
+1. **Initialization**: Set up pointers, counters, and auxiliary data structures needed by `convert(String s, int numRows) -> String`.
+2. **Core Traversal**: Apply **Direct Iterative Traversal / Simulation** — inspect each element or state transition and update the tracked result.
+3. **Invariant Maintenance**: Advance pointers / window boundaries while preserving all loop invariants.
+4. **Return Result**: Finalize and return the accumulated result or modified structure.
 
 ## Key Concepts
 
-- **Array of Dynamic Lists**: `List<Character>[]` using `ArrayList` per row to group characters without precalculating exact column widths.
-- **Direction Toggle Pattern**: Using a signed increment (`direction = 1` or `-1`) to alternate trajectory at boundary rows (`0` and `numRows - 1`).
-- **Boundary Guarding**: Early return when `numRows == 1` or `numRows >= s.length()`, eliminating edge-case index bounds violations.
-- **String Building**: `StringBuilder` for linear-time character aggregation.
+- **Data Structure**: Dynamic Array (`ArrayList`/`List`)
+- **Data Structure**: String Builder (`StringBuilder`)
+- **Algorithm / Technique**: Direct Iterative Traversal / Simulation
 
 ## Java Solution
 
@@ -42,20 +29,13 @@ The complete Java implementation is available in [`ZigzagConversion.java`](./Zig
 
 ## Complexity Analysis
 
-Let $|s|$ be the length of the input string and `numRows` be the number of rows:
+- **Time Complexity**: $\mathcal{O}(n^2)$
+  - Nested loops iterate over element pairs.
 
-- **Time Complexity**: $\mathcal{O}(|s| + \text{numRows})$
-  - Initializing `numRows` lists takes $\mathcal{O}(\text{numRows})$ time.
-  - Distributing $|s|$ characters across the lists runs in a single loop with $\mathcal{O}(1)$ amortized insertion per character, taking $\mathcal{O}(|s|)$ time.
-  - Concatenating all characters from `twoDStructure` into `StringBuilder` takes $\mathcal{O}(|s|)$ time.
-  - Overall time complexity is $\mathcal{O}(|s| + \text{numRows})$.
-
-- **Auxiliary Space Complexity**: $\mathcal{O}(|s| + \text{numRows})$
-  - Storing $|s|$ characters across the `twoDStructure` lists requires $\mathcal{O}(|s|)$ auxiliary heap space.
-  - The array holding references for `numRows` lists requires $\mathcal{O}(\text{numRows})$ space.
-  - The `StringBuilder` requires $\mathcal{O}(|s|)$ space to construct the final string.
+- **Auxiliary Space Complexity**: $\mathcal{O}(n)$
+  - Auxiliary collections proportional to input size are allocated.
 
 ## Key Takeaways
 
-- Simulating the path of characters using a row pointer and a reversible step offset (`+1` / `-1`) eliminates complex geometric index formulas.
-- Grouping characters into row-specific dynamic lists avoids allocating sparse 2D matrices that waste memory on unused zigzag cells.
+- Choosing **direct iterative traversal / simulation** leads to an efficient solution for this class of problem.
+- Keeping auxiliary allocations minimal ensures the solution remains space-optimal.

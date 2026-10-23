@@ -1,4 +1,4 @@
-class Solution
+class Solution_43
 {
     public String multiply(String num1, String num2) 
     {

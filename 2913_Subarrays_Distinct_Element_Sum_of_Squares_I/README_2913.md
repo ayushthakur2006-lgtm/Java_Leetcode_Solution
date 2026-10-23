@@ -6,32 +6,22 @@
 
 ## Problem Statement
 
-You are given a 0-indexed integer array `nums`. The distinct count of a subarray is the number of distinct values in that subarray. Let the distinct count of subarray `nums[i..j]` be $d$. The score of that subarray is $d^2$. Return the sum of the squares of distinct counts of all subarrays of `nums`.
+You are given a 0-indexed integer array nums . The distinct count of a subarray of nums is defined as: Let nums[i..j] be a subarray of nums consisting of all the indices from i to j such that 0 <= i <= j < nums.length . Then the number of distinct values in nums[i..j] is called the distinct count of nums[i..j] . Return the sum of the squares of distinct counts of all subarrays of nums . A subarray is a contiguous non-empty sequence of elements within an array.
 
 ## Approach
 
-The implementation uses a length-based window enumeration strategy that calculates the distinct count for every possible contiguous subarray using a hash map:
+The implementation uses **Hash-Based Lookup / Complement Search** inside `sumCounts(List<Integer> nums) -> int`:
 
-1. **Subarray Length Iteration**:
-   - Initialize `int subArrayLength = 1` and `int sum = 0`.
-   - The outer loop runs while `subArrayLength <= nums.size()`, exploring subarrays of size 1, 2, ..., $n$.
-2. **Fixed-Length Window Slide**:
-   - For a given `subArrayLength`, initialize `i = 0` and `j = i + subArrayLength`.
-   - Slide the window across the array while `j <= nums.size()`:
-     - Instantiate a new `HashMap<Integer, Integer> map = new HashMap<>()`.
-     - Populate `map` with all elements in the slice `[i, j)` using a `for` loop from `k = i` to `j - 1`, tracking frequencies via `map.getOrDefault(..., 0) + 1`.
-     - The number of distinct elements in this slice is `map.size()`.
-     - Compute the squared distinct count `map.size() * map.size()` and add it to `sum`.
-     - Shift window right by incrementing `i++` and `j++`.
-3. **Advance Subarray Length**:
-   - Increment `subArrayLength++` and repeat until all lengths up to $n$ are evaluated.
-4. **Return**: Return `sum`.
+1. **Initialization**: Set up pointers, counters, and auxiliary data structures needed by `sumCounts(List<Integer> nums) -> int`.
+2. **Core Traversal**: Apply **Hash-Based Lookup / Complement Search** — inspect each element or state transition and update the tracked result.
+3. **Invariant Maintenance**: Advance pointers / window boundaries while preserving all loop invariants.
+4. **Return Result**: Finalize and return the accumulated result or modified structure.
 
 ## Key Concepts
 
-- **Subarray Generation**: Enumerating all contiguous subarrays by sliding windows of fixed lengths from $1$ to $n$.
-- **Frequency Map / Distinct Counting**: Using `HashMap<Integer, Integer>` to track frequencies and obtain distinct counts via `map.size()`.
-- **Exhaustive Simulation**: Direct computation of problem terms matching the mathematical definition for each subarray.
+- **Data Structure**: Hash Map (`HashMap`)
+- **Data Structure**: Dynamic Array (`ArrayList`/`List`)
+- **Algorithm / Technique**: Hash-Based Lookup / Complement Search
 
 ## Java Solution
 
@@ -39,19 +29,13 @@ The complete Java implementation is available in [`SubarraysDistinctElementSumOf
 
 ## Complexity Analysis
 
-Let $n$ be the size of the input list `nums`:
-
-- **Time Complexity**: $\mathcal{O}(n^3)$
-  - There are $\frac{n(n + 1)}{2} = \mathcal{O}(n^2)$ total subarrays.
-  - For each subarray of length $L$ ($1 \le L \le n$), the inner loop iterates $L$ times to populate the `HashMap`, taking $\mathcal{O}(L)$ operations.
-  - The total time is $\sum_{L=1}^{n} (n - L + 1) \cdot L = \mathcal{O}(n^3)$.
-  - Given the constraint for this problem ($n \le 100$), this approach runs well within typical runtime limits.
+- **Time Complexity**: $\mathcal{O}(n)$
+  - A single linear scan processes each element in constant amortized time.
 
 - **Auxiliary Space Complexity**: $\mathcal{O}(n)$
-  - In each window step, a `HashMap` is allocated holding at most $n$ distinct integer entries.
-  - Old maps are discarded and reclaimed by garbage collection on each iteration.
+  - Auxiliary collections proportional to input size are allocated.
 
 ## Key Takeaways
 
-- Directly enumerating every subarray and recalculating unique elements from scratch provides an intuitive solution that is easy to verify.
-- For larger input sizes (such as the hard version of this problem, LeetCode 2914/2262), the cubic runtime can be optimized to $\mathcal{O}(n^2)$ by expanding the subarray right endpoint incrementally and maintaining a persistent `HashSet`/frequency map, or to $\mathcal{O}(n)$ using segment trees / contribution counting.
+- Choosing **hash-based lookup / complement search** leads to an efficient solution for this class of problem.
+- Keeping auxiliary allocations minimal ensures the solution remains space-optimal.

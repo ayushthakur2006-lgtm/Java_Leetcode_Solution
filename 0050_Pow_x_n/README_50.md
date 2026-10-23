@@ -6,30 +6,20 @@
 
 ## Problem Statement
 
-Implement `pow(x, n)`, which calculates $x$ raised to the power $n$ ($x^n$). The exponent $n$ can be positive, negative, or zero.
+Implement pow(x, n) , which calculates x raised to the power n (i.e., x n ).
 
 ## Approach
 
-The implementation uses **binary exponentiation** (exponentiation by squaring) to compute powers in logarithmic time:
+The implementation uses **Binary Exponentiation / Fast Power** inside `myPow(double x, int n) -> double`:
 
-1. **64-Bit Exponent Conversion**:
-   - Cast the 32-bit signed integer `n` to a 64-bit integer `long power = n`.
-   - If `power < 0`, negate it (`power = -power`). Using `long` avoids 32-bit integer overflow when $n = -2^{31}$ (`Integer.MIN_VALUE`), whose negation would exceed `Integer.MAX_VALUE`.
-2. **Binary Exponentiation Loop**:
-   - Initialize `double ans = 1.0`.
-   - While `power > 0`:
-     - If `power % 2 == 1` (the lowest bit is set), multiply `ans` by the current base `x`.
-     - Square the base `x = x * x`.
-     - Halve the exponent `power = power / 2`.
-3. **Negative Exponent Inversion**:
-   - If the original exponent `n` was negative, invert the computed product: `ans = 1.0 / ans`.
-4. **Return**: Return `ans`.
+1. **Initialization**: Set up pointers, counters, and auxiliary data structures needed by `myPow(double x, int n) -> double`.
+2. **Core Traversal**: Apply **Binary Exponentiation / Fast Power** — inspect each element or state transition and update the tracked result.
+3. **Invariant Maintenance**: Advance pointers / window boundaries while preserving all loop invariants.
+4. **Return Result**: Finalize and return the accumulated result or modified structure.
 
 ## Key Concepts
 
-- **Binary Exponentiation / Exponentiation by Squaring**: Dividing the exponent by 2 while squaring the base reduces an $\mathcal{O}(n)$ linear calculation to $\mathcal{O}(\log n)$.
-- **Integer Overflow Protection**: Promoting 32-bit signed integers to `long` prevents underflow when negating `Integer.MIN_VALUE` ($-2^{31}$).
-- **Modular Parity Check**: Using `power % 2 == 1` to selectively apply multipliers according to the binary representation of the exponent.
+- **Algorithm / Technique**: Binary Exponentiation / Fast Power
 
 ## Java Solution
 
@@ -37,15 +27,13 @@ The complete Java implementation is available in [`PowXN.java`](./PowXN.java).
 
 ## Complexity Analysis
 
-- **Time Complexity**: $\mathcal{O}(\log |n|)$
-  - In each iteration of the `while` loop, `power` is divided by 2.
-  - The loop executes at most $\lfloor \log_2 |n| \rfloor + 1$ times.
-  - Each step consists of constant-time $\mathcal{O}(1)$ multiplications and divisions.
+- **Time Complexity**: $\mathcal{O}(\log n)$
+  - The problem space is halved at each step.
 
 - **Auxiliary Space Complexity**: $\mathcal{O}(1)$
-  - The algorithm executes iteratively without recursion, requiring only a constant number of scalar variables (`power`, `ans`, `x`).
+  - Only a constant number of scalar pointer variables are used.
 
 ## Key Takeaways
 
-- Direct linear multiplication $\mathcal{O}(|n|)$ times out for large exponents up to $2^{31} - 1$; exponentiation by squaring achieves an exponential speedup down to $\mathcal{O}(\log |n|)$.
-- Signed integer limits are asymmetrical: `-Integer.MIN_VALUE` cannot be represented in a 32-bit signed `int`. Casting to `long` before negation is a critical safeguard.
+- Choosing **binary exponentiation / fast power** leads to an efficient solution for this class of problem.
+- Keeping auxiliary allocations minimal ensures the solution remains space-optimal.

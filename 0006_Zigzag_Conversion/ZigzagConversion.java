@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-class Solution {
+class Solution_6 {
     public String convert(String s, int numRows) {
         if (numRows == 1 || numRows >= s.length()) {
             return s;
@@ -41,4 +41,3 @@ class Solution {
         return sb.toString();
     }
 }
-

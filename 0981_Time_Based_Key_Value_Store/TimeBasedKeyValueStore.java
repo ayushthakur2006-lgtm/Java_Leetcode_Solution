@@ -27,4 +27,3 @@ class TimeMap {
         return entry.getValue();
     }
 }
-
