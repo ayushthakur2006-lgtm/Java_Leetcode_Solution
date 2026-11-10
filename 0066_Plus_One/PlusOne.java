@@ -45,8 +45,4 @@ class Solution_66
     }
 }
 
-;
-        int nums[]=sol.plusOne(temp);
-        System.out.println(nums);
-    }    
-}
+
