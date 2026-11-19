@@ -18,9 +18,3 @@ class Solution_88
     }
 }
 
-;
-        int nums2[]={2,5,6};
-        Solution_88 sol=new Solution_88();
-        sol.merge(nums1,3,nums2,3);
-    }    
-}
